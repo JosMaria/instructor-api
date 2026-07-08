@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -19,23 +21,28 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/locution").hasRole("USER")
+                        .requestMatchers("/api/v1/locution").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
         UserDetails jose = User.builder()
                 .username("jose")
-                .password("{noop}jose17")
+                .password(encoder.encode("jose17"))
                 .roles("ADMIN")
                 .build();
 
         UserDetails maria = User.builder()
                 .username("maria")
-                .password("{noop}maria17")
+                .password(encoder.encode("maria17"))
                 .roles("USER")
                 .build();
 
