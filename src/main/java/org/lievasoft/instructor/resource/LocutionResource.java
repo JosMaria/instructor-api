@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/locution")
+@RequestMapping("api/v1/locutions")
 public class LocutionResource {
 
     private final LocutionService locutionService;
