@@ -13,9 +13,11 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 50)
     private String username;
     private String password;
 
+    @Column(length = 20)
     @Enumerated(EnumType.STRING)
     private Role role;
 
