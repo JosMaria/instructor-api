@@ -9,7 +9,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>org.lievasoft</groupId>
-  <artifactId>instructor</artifactId>
+  <artifactId>instructor-api</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name/>
   <description/>
