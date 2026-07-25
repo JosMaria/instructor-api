@@ -10,33 +10,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountService {
 
-    private final AccountRepository accountRepository;
-    private final PasswordEncoder passwordEncoder;
+	private final AccountRepository accountRepository;
+	private final PasswordEncoder passwordEncoder;
 
-    public AccountService(AccountRepository accountRepository, PasswordEncoder encoder) {
-        this.accountRepository = accountRepository;
-        this.passwordEncoder = encoder;
-    }
+	public AccountService(AccountRepository accountRepository, PasswordEncoder encoder) {
+		this.accountRepository = accountRepository;
+		this.passwordEncoder = encoder;
+	}
 
-    public AccountRegisterResponse register(AccountRegisterDTO accountRegisterDTO) {
-        var accountToPersist = toAccount(accountRegisterDTO);
-        var persistedAccount = accountRepository.save(accountToPersist);
-        return toAccountRegisterResponse(persistedAccount);
-    }
+	public AccountRegisterResponse register(AccountRegisterDTO accountRegisterDTO) {
+		var accountToPersist = mapToAccount(accountRegisterDTO);
+		var persistedAccount = accountRepository.save(accountToPersist);
+		return mapToAccountRegisterResponse(persistedAccount);
+	}
 
-    private Account toAccount(AccountRegisterDTO accountRegisterDTO) {
-        return new Account(
-                accountRegisterDTO.username(),
-                passwordEncoder.encode(accountRegisterDTO.password()),
-                accountRegisterDTO.role()
-        );
-    }
+	private Account mapToAccount(AccountRegisterDTO accountRegisterDTO) {
+		var encodedPassword = passwordEncoder.encode(accountRegisterDTO.password());
+		return new Account(
+				accountRegisterDTO.username(),
+				encodedPassword,
+				accountRegisterDTO.role()
+		);
+	}
 
-    private AccountRegisterResponse toAccountRegisterResponse(Account account) {
-        return new AccountRegisterResponse(
-                account.getId(),
-                account.getUsername(),
-                account.getRole()
-        );
-    }
+	private AccountRegisterResponse mapToAccountRegisterResponse(Account account) {
+		return new AccountRegisterResponse(
+				account.getId(),
+				account.getUsername(),
+				account.getRole()
+		);
+	}
 }
