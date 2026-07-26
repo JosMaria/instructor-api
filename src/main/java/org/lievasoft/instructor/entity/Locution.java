@@ -1,28 +1,44 @@
 package org.lievasoft.instructor.entity;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "locutions")
 public class Locution {
 
-    private String sentence;
-    private List<String> generalDefinitions;
-    private List<SentenceContext> sentenceContexts;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    public Locution(String sentence, List<String> generalDefinitions, List<SentenceContext> sentenceContexts) {
-        this.sentence = sentence;
-        this.generalDefinitions = generalDefinitions;
-        this.sentenceContexts = sentenceContexts;
-    }
+	@Column(nullable = false, unique = true)
+	private String sentence;
 
-    public String getSentence() {
-        return sentence;
-    }
+	@OneToMany(mappedBy = "locution", cascade = CascadeType.PERSIST)
+	private final List<Example> examples = new ArrayList<>();
 
-    public List<String> getGeneralDefinitions() {
-        return generalDefinitions;
-    }
+	public Locution() {
+	}
 
-    public List<SentenceContext> getSentenceContexts() {
-        return sentenceContexts;
-    }
+	public Locution(String sentence) {
+		this.sentence = sentence;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getSentence() {
+		return sentence;
+	}
+
+	public void addExamples(List<String> examplesToAdd) {
+		examplesToAdd.forEach(text -> {
+			var example = new Example(text);
+			this.examples.add(example);
+			example.setLocution(this);
+		});
+	}
 }
