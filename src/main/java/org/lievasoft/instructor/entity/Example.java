@@ -12,7 +12,7 @@ public class Example {
 	private String id;
 
 	@ManyToOne
-	@JoinColumn(name = "locution_id")
+	@JoinColumn(name = "locution_id", nullable = false)
 	private Locution locution;
 
 	@Column(nullable = false)

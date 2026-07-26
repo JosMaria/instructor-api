@@ -1,6 +1,7 @@
 package org.lievasoft.instructor.entity;
 
 import jakarta.persistence.*;
+import org.lievasoft.instructor.dto.locution.LocutionCreateDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,16 @@ public class Locution {
 	@OneToMany(mappedBy = "locution", cascade = CascadeType.PERSIST)
 	private final List<Example> examples = new ArrayList<>();
 
+	@OneToMany(mappedBy = "locution", cascade = CascadeType.PERSIST)
+	private final List<Translation> translations = new ArrayList<>();
+
 	public Locution() {
 	}
 
-	public Locution(String sentence) {
-		this.sentence = sentence;
+	public Locution(LocutionCreateDTO locutionCreateDTO) {
+		this.sentence = locutionCreateDTO.sentence();
+		this.addExamples(locutionCreateDTO.examples());
+		this.addTranslations(locutionCreateDTO.translations());
 	}
 
 	public Long getId() {
@@ -39,6 +45,14 @@ public class Locution {
 			var example = new Example(text);
 			this.examples.add(example);
 			example.setLocution(this);
+		});
+	}
+
+	public void addTranslations(List<String> translationsToAdd) {
+		translationsToAdd.forEach(text ->{
+			var translation = new Translation(text);
+			this.translations.add(translation);
+			translation.setLocution(this);
 		});
 	}
 }

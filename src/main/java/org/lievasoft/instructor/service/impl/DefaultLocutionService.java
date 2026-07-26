@@ -24,9 +24,7 @@ public class DefaultLocutionService implements LocutionService {
 	}
 
 	private Locution mapToLocution(LocutionCreateDTO locutionCreateDTO) {
-		var locution = new Locution(locutionCreateDTO.sentence());
-		locution.addExamples(locutionCreateDTO.examples());
-		return locution;
+		return new Locution(locutionCreateDTO);
 	}
 
 	private LocutionResponse mapToLocutionResponse(Locution locution) {

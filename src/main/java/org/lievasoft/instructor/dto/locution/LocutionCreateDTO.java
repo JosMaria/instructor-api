@@ -4,6 +4,7 @@ import java.util.List;
 
 public record LocutionCreateDTO(
 		String sentence,
-		List<String> examples
+		List<String> examples,
+		List<String> translations
 ) {
 }
