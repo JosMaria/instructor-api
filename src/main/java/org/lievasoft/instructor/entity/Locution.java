@@ -1,7 +1,7 @@
 package org.lievasoft.instructor.entity;
 
 import jakarta.persistence.*;
-import org.lievasoft.instructor.dto.locution.LocutionCreateDTO;
+import org.lievasoft.instructor.dto.locution.LocutionCreateDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class Locution {
 	public Locution() {
 	}
 
-	public Locution(LocutionCreateDTO locutionCreateDTO) {
+	public Locution(LocutionCreateDto locutionCreateDTO) {
 		this.sentence = locutionCreateDTO.sentence();
 		this.addExamples(locutionCreateDTO.examples());
 		this.addTranslations(locutionCreateDTO.translations());

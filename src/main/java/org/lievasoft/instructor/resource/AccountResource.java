@@ -1,6 +1,6 @@
 package org.lievasoft.instructor.resource;
 
-import org.lievasoft.instructor.dto.AccountRegisterDTO;
+import org.lievasoft.instructor.dto.AccountRegisterDto;
 import org.lievasoft.instructor.dto.AccountRegisterResponse;
 import org.lievasoft.instructor.service.AccountService;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,8 @@ public class AccountResource {
     }
 
     @PostMapping("register")
-    public ResponseEntity<AccountRegisterResponse> register(@RequestBody AccountRegisterDTO accountRegisterDTO) {
-        var accountRegisterResponse = accountService.register(accountRegisterDTO);
+    public ResponseEntity<AccountRegisterResponse> register(@RequestBody AccountRegisterDto accountRegisterDto) {
+        var accountRegisterResponse = accountService.register(accountRegisterDto);
         return ResponseEntity.created(URI.create("/api/v1/accounts/register")).body(accountRegisterResponse);
     }
 }

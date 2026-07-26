@@ -1,6 +1,6 @@
 package org.lievasoft.instructor.service;
 
-import org.lievasoft.instructor.dto.AccountRegisterDTO;
+import org.lievasoft.instructor.dto.AccountRegisterDto;
 import org.lievasoft.instructor.dto.AccountRegisterResponse;
 import org.lievasoft.instructor.entity.Account;
 import org.lievasoft.instructor.repository.AccountRepository;
@@ -18,18 +18,18 @@ public class AccountService {
 		this.passwordEncoder = encoder;
 	}
 
-	public AccountRegisterResponse register(AccountRegisterDTO accountRegisterDTO) {
-		var accountToPersist = mapToAccount(accountRegisterDTO);
+	public AccountRegisterResponse register(AccountRegisterDto accountRegisterDto) {
+		var accountToPersist = mapToAccount(accountRegisterDto);
 		var persistedAccount = accountRepository.save(accountToPersist);
 		return mapToAccountRegisterResponse(persistedAccount);
 	}
 
-	private Account mapToAccount(AccountRegisterDTO accountRegisterDTO) {
-		var encodedPassword = passwordEncoder.encode(accountRegisterDTO.password());
+	private Account mapToAccount(AccountRegisterDto accountRegisterDto) {
+		var encodedPassword = passwordEncoder.encode(accountRegisterDto.password());
 		return new Account(
-				accountRegisterDTO.username(),
+				accountRegisterDto.username(),
 				encodedPassword,
-				accountRegisterDTO.role()
+				accountRegisterDto.role()
 		);
 	}
 

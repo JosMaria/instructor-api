@@ -1,13 +1,11 @@
 package org.lievasoft.instructor.resource;
 
-import org.lievasoft.instructor.dto.locution.LocutionCreateDTO;
+import org.lievasoft.instructor.dto.locution.DetailsLocutionResponse;
+import org.lievasoft.instructor.dto.locution.LocutionCreateDto;
 import org.lievasoft.instructor.dto.locution.LocutionResponse;
 import org.lievasoft.instructor.service.LocutionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -22,8 +20,14 @@ public class LocutionResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<LocutionResponse> create(@RequestBody LocutionCreateDTO locutionCreateDTO) {
-		var locutionResponse = locutionService.create(locutionCreateDTO);
+	public ResponseEntity<LocutionResponse> create(@RequestBody LocutionCreateDto locutionCreateDto) {
+		var locutionResponse = locutionService.create(locutionCreateDto);
 		return ResponseEntity.created(URI.create("/api/v1/locutions")).body(locutionResponse);
+	}
+
+	@GetMapping("/{locutionId}")
+	public ResponseEntity<DetailsLocutionResponse> fetchById(@PathVariable Long locutionId) {
+		var detailsLocutionResponse = locutionService.obtainLocutionResponseById(locutionId);
+		return ResponseEntity.ok(detailsLocutionResponse);
 	}
 }

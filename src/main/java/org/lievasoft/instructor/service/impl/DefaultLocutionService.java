@@ -1,30 +1,39 @@
 package org.lievasoft.instructor.service.impl;
 
-import org.lievasoft.instructor.dto.locution.LocutionCreateDTO;
+import org.lievasoft.instructor.dto.locution.DetailsLocutionResponse;
+import org.lievasoft.instructor.dto.locution.LocutionCreateDto;
 import org.lievasoft.instructor.dto.locution.LocutionResponse;
 import org.lievasoft.instructor.entity.Locution;
-import org.lievasoft.instructor.repository.JpaLocutionRepository;
+import org.lievasoft.instructor.repository.LocutionDao;
+import org.lievasoft.instructor.repository.LocutionRepository;
 import org.lievasoft.instructor.service.LocutionService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultLocutionService implements LocutionService {
 
-	private final JpaLocutionRepository jpaLocutionRepository;
+	private final LocutionRepository locutionRepository;
+	private final LocutionDao locutionDao;
 
-	public DefaultLocutionService(JpaLocutionRepository jpaLocutionRepository) {
-		this.jpaLocutionRepository = jpaLocutionRepository;
+	public DefaultLocutionService(LocutionRepository locutionRepository, LocutionDao locutionDao) {
+		this.locutionRepository = locutionRepository;
+		this.locutionDao = locutionDao;
 	}
 
 	@Override
-	public LocutionResponse create(LocutionCreateDTO locutionCreateDTO) {
-		var locution = mapToLocution(locutionCreateDTO);
-		var persistedLocution = jpaLocutionRepository.save(locution);
+	public LocutionResponse create(LocutionCreateDto locutionCreateDto) {
+		var locution = mapToLocution(locutionCreateDto);
+		var persistedLocution = locutionRepository.save(locution);
 		return mapToLocutionResponse(persistedLocution);
 	}
 
-	private Locution mapToLocution(LocutionCreateDTO locutionCreateDTO) {
-		return new Locution(locutionCreateDTO);
+	@Override
+	public DetailsLocutionResponse obtainLocutionResponseById(Long locutionId) {
+		return locutionDao.getDetailsLocutionResponseById(locutionId);
+	}
+
+	private Locution mapToLocution(LocutionCreateDto locutionCreateDto) {
+		return new Locution(locutionCreateDto);
 	}
 
 	private LocutionResponse mapToLocutionResponse(Locution locution) {
