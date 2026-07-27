@@ -2,7 +2,7 @@ package org.lievasoft.instructor.entity;
 
 import jakarta.persistence.*;
 import org.jspecify.annotations.Nullable;
-import org.lievasoft.instructor.Role;
+import org.lievasoft.instructor.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

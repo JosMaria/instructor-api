@@ -1,4 +1,4 @@
-package org.lievasoft.instructor;
+package org.lievasoft.instructor.enums;
 
 public enum Role {
     ADMIN,

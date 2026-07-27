@@ -1,6 +1,6 @@
 package org.lievasoft.instructor.dto;
 
-import org.lievasoft.instructor.Role;
+import org.lievasoft.instructor.enums.Role;
 
 public record AccountRegisterDto(
         String username,
