@@ -30,9 +30,7 @@ public class JdbcLocutionDao implements LocutionDao {
 				""";
 
 		RowMapper<DetailsLocutionResponse> rowMapper = (resultSet, _) -> {
-			if (!resultSet.next())
-				throw new NoRowException("Locution with ID %s not has been found".formatted(locutionId));
-			else {
+			if (resultSet.next()) {
 				var obtainedLocutionId = resultSet.getLong("locution_id");
 				var sentence = resultSet.getString("sentence");
 				List<String> translations = new ArrayList<>();
@@ -41,12 +39,13 @@ public class JdbcLocutionDao implements LocutionDao {
 					if (translation != null) translations.add(translation);
 				} while (resultSet.next());
 				return new DetailsLocutionResponse(obtainedLocutionId, sentence, translations);
-			}
+			} else return null;
 		};
 
 		return jdbcClient.sql(sql)
 				.param("id", locutionId)
 				.query(rowMapper)
-				.single();
+				.optional()
+				.orElseThrow(() -> new NoRowException("Locution with ID: %s not has been found".formatted(locutionId)));
 	}
 }
