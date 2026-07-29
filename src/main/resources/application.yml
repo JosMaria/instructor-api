@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: instructor-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/instructor_db
+    username: postgres
+    password: maria17
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+# Liquibase Configuration
+#spring.liquibase.enabled=true
+#spring.liquibase.contexts=dev
+#spring.liquibase.change-log=classpath:db/changelog/changelog-master.yaml
