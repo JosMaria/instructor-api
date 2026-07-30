@@ -17,8 +17,8 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(
 			HttpSecurity http, @Qualifier("defaultUserDetailsService") UserDetailsService userDetailsService) {
-			return http
-					.csrf(AbstractHttpConfigurer::disable)
+		return http
+				.csrf(AbstractHttpConfigurer::disable)
 				.userDetailsService(userDetailsService)
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/actuator/**").permitAll()
@@ -26,6 +26,8 @@ public class SecurityConfig {
 						.requestMatchers("/api/v1/accounts/register").permitAll()
 						.anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())
+				.oauth2Login(Customizer.withDefaults())
+				.formLogin(Customizer.withDefaults())
 				.build();
 	}
 }

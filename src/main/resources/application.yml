@@ -17,7 +17,12 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
-  
+  security.oauth2.client:
+        registration:
+          github:
+            client-id: ${OAUTH2_GITHUB_CLIENT_ID}
+            client-secret: ${OAUTH2_GITHUB_CLIENT_SECRET}
+
 management:
   endpoints:
     web:
