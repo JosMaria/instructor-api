@@ -1,4 +1,4 @@
-package org.lievasoft.instructor.dto;
+package org.lievasoft.instructor.dto.auth;
 
 import org.lievasoft.instructor.enums.Role;
 
