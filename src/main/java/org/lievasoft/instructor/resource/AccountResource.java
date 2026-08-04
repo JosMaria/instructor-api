@@ -2,6 +2,7 @@ package org.lievasoft.instructor.resource;
 
 import org.lievasoft.instructor.dto.auth.AccountRegisterDto;
 import org.lievasoft.instructor.dto.auth.AuthResponse;
+import org.lievasoft.instructor.dto.auth.LoginRequest;
 import org.lievasoft.instructor.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +16,21 @@ import java.net.URI;
 @RequestMapping("/api/v1/accounts")
 public class AccountResource {
 
-    private final AccountService accountService;
+	private final AccountService accountService;
 
-    public AccountResource(AccountService accountService) {
-        this.accountService = accountService;
-    }
+	public AccountResource(AccountService accountService) {
+		this.accountService = accountService;
+	}
 
-    @PostMapping("register")
-    public ResponseEntity<AuthResponse> register(@RequestBody AccountRegisterDto accountRegisterDto) {
-        var authResponse = accountService.register(accountRegisterDto);
-        return ResponseEntity.created(URI.create("/api/v1/accounts/register")).body(authResponse);
-    }
+	@PostMapping("register")
+	public ResponseEntity<AuthResponse> register(@RequestBody AccountRegisterDto accountRegisterDto) {
+		var authResponse = accountService.register(accountRegisterDto);
+		return ResponseEntity.created(URI.create("/api/v1/accounts/register")).body(authResponse);
+	}
+
+	@PostMapping("login")
+	public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
+		var authResponse = accountService.login(loginRequest);
+		return ResponseEntity.ok(authResponse);
+	}
 }

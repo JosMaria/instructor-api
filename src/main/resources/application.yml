@@ -18,17 +18,25 @@ spring:
     hibernate:
       ddl-auto: update
   security.oauth2.client:
-        registration:
-          github:
-            client-id: ${OAUTH2_GITHUB_CLIENT_ID}
-            client-secret: ${OAUTH2_GITHUB_CLIENT_SECRET}
+    registration:
+      github:
+        client-id: ${OAUTH2_GITHUB_CLIENT_ID}
+        client-secret: ${OAUTH2_GITHUB_CLIENT_SECRET}
+
+jwt:
+  secret: ${SECRET_KEY}
+  expiration: 300_000
 
 management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: beans
 
+logging.level.org:
+  springframework:
+    web: debug
+    security: debug
 # Liquibase Configuration
 #spring.liquibase.enabled=true
 #spring.liquibase.contexts=dev
